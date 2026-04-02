@@ -27,6 +27,21 @@ public sealed class TransactionRepository : ITransactionRepository
             .FirstOrDefaultAsync(t => t.ReferenceId == referenceId, cancellationToken);
     }
 
+    public async Task<IReadOnlyList<Transaction>> GetByWalletIdsAsync(
+        IReadOnlyCollection<Guid> walletIds,
+        CancellationToken cancellationToken = default)
+    {
+        if (walletIds.Count == 0)
+        {
+            return [];
+        }
+
+        return await _dbContext.Transactions
+            .Where(t => walletIds.Contains(t.WalletId))
+            .OrderByDescending(t => t.CreatedAtUtc)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task AddAsync(Transaction transaction, CancellationToken cancellationToken = default)
     {
         await _dbContext.Transactions.AddAsync(transaction, cancellationToken);

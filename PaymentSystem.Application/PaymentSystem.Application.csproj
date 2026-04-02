@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PaymentSystem.Infrastructure\PaymentSystem.Infrastructure.csproj" />
+    <PackageReference Include="MediatR" Version="14.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaymentSystem.Domain\PaymentSystem.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="DTOs\" />
   </ItemGroup>
 
 </Project>
