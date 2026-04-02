@@ -20,9 +20,7 @@ public sealed class GetTransactionStatusQueryHandler
 
         var transaction = await _transactionRepository.GetByReferenceIdAsync(request.ReferenceId, cancellationToken);
         if (transaction is null)
-        {
             return null;
-        }
 
         return new GetTransactionStatusResult(transaction.Id, transaction.ReferenceId, transaction.Status);
     }

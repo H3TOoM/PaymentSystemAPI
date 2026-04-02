@@ -20,9 +20,20 @@ public class User
         CreatedAtUtc = DateTime.UtcNow;
     }
 
+    public User(Guid id, string fullName, string email, string passwordHash)
+    {
+        Id = id.EnsureNotEmpty(nameof(id), "User id cannot be empty.");
+        FullName = fullName.EnsureRequired(nameof(fullName), "Full name is required.");
+        Email = email.EnsureRequired(nameof(email), "Email is required.");
+        PasswordHash = passwordHash.EnsureRequired(nameof(passwordHash), "Password hash is required.");
+        IsActive = true;
+        CreatedAtUtc = DateTime.UtcNow;
+    }
+
     public Guid Id { get; private set; }
     public string FullName { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
+    public string? PasswordHash { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
     public IReadOnlyCollection<Wallet> Wallets => _wallets.AsReadOnly();
@@ -47,6 +58,11 @@ public class User
     public void Activate()
     {
         IsActive = true;
+    }
+
+    public void UpdatePasswordHash(string passwordHash)
+    {
+        PasswordHash = passwordHash.EnsureRequired(nameof(passwordHash), "Password hash is required.");
     }
 
     public AuditLog AddAuditLog(Guid auditLogId, string action, string targetType, string details)

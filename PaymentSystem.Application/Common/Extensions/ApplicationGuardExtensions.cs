@@ -35,4 +35,10 @@ public static class ApplicationGuardExtensions
         (value is not null).Ensure(message);
         return value!;
     }
+
+    public static T EnsureNotNull<T>(this T? value, string message) where T : class
+    {
+        (value is not null).Ensure(message);
+        return value!;
+    }
 }

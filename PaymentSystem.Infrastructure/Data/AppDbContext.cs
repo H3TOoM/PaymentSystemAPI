@@ -24,6 +24,7 @@ namespace PaymentSystem.Infrastructure.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.FullName).IsRequired();
                 entity.Property(e => e.Email).IsRequired();
+                entity.Property(e => e.PasswordHash);
                 entity.HasMany(e => e.Wallets).WithOne(w => w.User).HasForeignKey(w => w.UserId);
                 entity.HasMany(e => e.AuditLogs).WithOne(a => a.User).HasForeignKey(a => a.UserId);
             });
