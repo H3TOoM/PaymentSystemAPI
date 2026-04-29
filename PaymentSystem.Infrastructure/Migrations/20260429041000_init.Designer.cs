@@ -12,7 +12,7 @@ using PaymentSystem.Infrastructure.Data;
 namespace PaymentSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260402123829_init")]
+    [Migration("20260429041000_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -76,7 +76,7 @@ namespace PaymentSystem.Infrastructure.Migrations
 
                     b.Property<string>("ReferenceId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -88,6 +88,9 @@ namespace PaymentSystem.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ReferenceId")
+                        .IsUnique();
 
                     b.HasIndex("WalletId");
 
@@ -118,7 +121,7 @@ namespace PaymentSystem.Infrastructure.Migrations
 
                     b.HasIndex("TransactionId");
 
-                    b.ToTable("TransactionLog");
+                    b.ToTable("TransactionLogs");
                 });
 
             modelBuilder.Entity("PaymentSystem.Domain.Entities.User", b =>
@@ -140,6 +143,9 @@ namespace PaymentSystem.Infrastructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

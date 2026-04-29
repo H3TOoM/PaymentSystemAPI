@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PaymentSystem.Domain.Interfaces;
+using PaymentSystem.Infrastructure.Data;
 using PaymentSystem.Infrastructure.Repositories;
 
 namespace PaymentSystem.Infrastructure
@@ -10,8 +11,10 @@ namespace PaymentSystem.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<Data.AppDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                   sqlOptions => sqlOptions.EnableRetryOnFailure()
+                ));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();

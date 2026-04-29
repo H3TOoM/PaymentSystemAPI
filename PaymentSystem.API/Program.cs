@@ -68,14 +68,10 @@ app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 
 
+app.MapOpenApi();
+app.MapScalarApiReference();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference();
 
-}
 
 app.UseHttpsRedirection();
 
